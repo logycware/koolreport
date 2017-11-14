@@ -41,40 +41,6 @@
 		<?php	
 		}
 		?>
-		<?php
-		if($this->showFooter!==null)
-		{
-		?>
-		<tfoot <?php echo ($this->showFooter==="top")?"style='display:table-row-group'":""; ?>>
-			<tr>
-			<?php
-			foreach($showColumnKeys as $cKey)
-			{
-				$cssStyle = Utility::get($meta["columns"][$cKey],"cssStyle",null);
-				$tfStyle = is_string($cssStyle)?$cssStyle:Utility::get($cssStyle,"tf");
-			?>
-				<td <?php if($tfClass){echo " class='".((gettype($tfClass)=="string")?$tfClass:$tfClass($cKey))."'";} ?> <?php echo ($tfStyle)?"style='$tfStyle'":""; ?> >
-					<?php 
-						$footerValue = isset($this->footer[$cKey])?Utility::format($this->footer[$cKey],$meta["columns"][$cKey]):"";
-						$footerText = Utility::get($meta["columns"][$cKey],"footerText");
-						if($footerText!==null)
-						{
-							echo str_replace("@value",$footerValue,$footerText);
-						}
-						else
-						{
-							echo $footerValue;
-						}
-					?>
-				</td>	
-			<?php	
-			}
-			?>
-			</tr>
-		</tfoot>
-		<?php	
-		}
-		?>
 		<tbody>
 			<?php
 			$this->dataStore->popStart(); 
@@ -123,6 +89,41 @@
 			}
 			?>
 		</tbody>
+		<?php
+		if($this->showFooter!==null)
+		{
+		?>
+		<tfoot <?php echo ($this->showFooter==="top")?"style='display:table-row-group'":""; ?>>
+			<tr>
+			<?php
+			foreach($showColumnKeys as $cKey)
+			{
+				$cssStyle = Utility::get($meta["columns"][$cKey],"cssStyle",null);
+				$tfStyle = is_string($cssStyle)?$cssStyle:Utility::get($cssStyle,"tf");
+			?>
+				<td <?php if($tfClass){echo " class='".((gettype($tfClass)=="string")?$tfClass:$tfClass($cKey))."'";} ?> <?php echo ($tfStyle)?"style='$tfStyle'":""; ?> >
+					<?php 
+						$footerValue = isset($this->footer[$cKey])?Utility::format($this->footer[$cKey],$meta["columns"][$cKey]):"";
+						$footerText = Utility::get($meta["columns"][$cKey],"footerText");
+						if($footerText!==null)
+						{
+							echo str_replace("@value",$footerValue,$footerText);
+						}
+						else
+						{
+							echo $footerValue;
+						}
+					?>
+				</td>	
+			<?php	
+			}
+			?>
+			</tr>
+		</tfoot>
+		<?php	
+		}
+		?>
+
 	</table>
 	<?php
 	if($this->paging)
